@@ -89,16 +89,27 @@ class NeuralNetwork:
 
 
 # -------------------------
-# DATOS XOR
+# DATOS CLIENTES
 # -------------------------
+
+# interes - descuento
+
 inputs = np.array([
-    [0, 0],
-    [0, 1],
-    [1, 0],
-    [1, 1]
+    [0.1, 0.1],
+    [0.2, 0.8],
+    [0.8, 0.2],
+    [0.9, 0.9],
+    [0.4, 0.4],
+    [0.7, 0.6],
+    [0.3, 0.7],
+    [0.6, 0.3]
 ])
 
 outputs = np.array([
+    [0],
+    [0],
+    [1],
+    [1],
     [0],
     [1],
     [1],
@@ -109,9 +120,9 @@ outputs = np.array([
 # -------------------------
 # ENTRENAMIENTO
 # -------------------------
-layers = [2, 2, 1]
+layers = [2, 2, 1] 
 
-nn = NeuralNetwork(layers, learning_rate=0.1, epochs=100000)
+nn = NeuralNetwork(layers, learning_rate=0.1, epochs=10000)
 nn.train(inputs, outputs)
 
 
@@ -121,15 +132,15 @@ nn.train(inputs, outputs)
 predicted_output = np.array([nn.predict(x) for x in inputs])
 
 print("\nPredicciones:")
-print(predicted_output)
+print(np.round(predicted_output, 3))
 
 print("\nRedondeado:")
-print(np.round(predicted_output))
+print(np.round(predicted_output).astype(int))
 
 accuracy = np.mean(np.round(predicted_output).ravel() == outputs.ravel())
 print("\nAccuracy:", accuracy)
 
 
-# -------------------------
-# GRAFICO (DECISION BOUNDARY)
-# -------------------------
+
+
+
