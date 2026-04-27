@@ -18,7 +18,6 @@ Genera gráficos en:
 """
 
 import os
-import copy
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -295,8 +294,8 @@ def experimento_learning_rate(fig_dir):
 
 def experimento_overfitting(fig_dir):
     """
-    Para que se vea el overfitting se usan pocos datos de entrenamiento y ruido.
-    La red tiene capacidad suficiente para ajustarse a esos datos ruidosos.
+    Para que se vea el overfitting se usan pocos datos de entrenamiento
+    y una red con mucha capacidad para esos datos.
     """
     np.random.seed(22)
     _, _, XY, Z = crear_grid(n=25)
@@ -304,14 +303,11 @@ def experimento_overfitting(fig_dir):
         escalar_entrada(XY), Z, proporcion_train=0.035, seed=5
     )
 
-    rng = np.random.default_rng(123)
-    y_train_ruidoso = y_train + rng.normal(0, 0.70, size=y_train.shape)
-
-    nn = NeuralNetwork([2, 64, 64, 1], learning_rate=0.02, epochs=2500)
-    nn.train(X_train, y_train_ruidoso, X_test, y_test, verbose=False)
+    nn = NeuralNetwork([2, 96, 96, 1], learning_rate=0.02, epochs=4000)
+    nn.train(X_train, y_train, X_test, y_test, verbose=False)
 
     plt.figure(figsize=(8, 5))
-    plt.plot(nn.mse_history, label="Train con ruido")
+    plt.plot(nn.mse_history, label="Train")
     plt.plot(nn.val_history, label="Test real")
     plt.yscale("log")
     plt.xlabel("Épocas")
